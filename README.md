@@ -12,6 +12,13 @@
 - **Queueing Support**: Handles concurrent inferences with error display.
 - **Efficient Inference**: Uses auto dtype/device_map; up to 2048 new tokens for verbose video responses.
 
+---
+<img width="1918" height="968" alt="Screenshot 2025-12-20 at 13-57-26 Molmo2 HF Demo - a Hugging Face Space by prithivMLmods" src="https://github.com/user-attachments/assets/3830d8c4-1923-4b24-a920-fa80527bdd57" />
+
+
+---
+
+
 ## Prerequisites
 
 - Python 3.10 or higher.
