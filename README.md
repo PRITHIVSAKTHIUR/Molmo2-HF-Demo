@@ -13,11 +13,14 @@
 - **Efficient Inference**: Uses auto dtype/device_map; up to 2048 new tokens for verbose video responses.
 
 ---
+
 <img width="1918" height="968" alt="Screenshot 2025-12-20 at 13-57-26 Molmo2 HF Demo - a Hugging Face Space by prithivMLmods" src="https://github.com/user-attachments/assets/3830d8c4-1923-4b24-a920-fa80527bdd57" />
 
+ <img width="1920" height="1013" alt="Screenshot 2025-12-20 at 13-59-03 Molmo2 HF Demo - a Hugging Face Space by prithivMLmods" src="https://github.com/user-attachments/assets/bc0ac605-e73d-4631-be1a-2a1d71187e3a" />
+
+https://github.com/user-attachments/assets/4e2829cb-2b2e-4535-9dae-7eeaee10a3bd
 
 ---
-
 
 ## Prerequisites
 
