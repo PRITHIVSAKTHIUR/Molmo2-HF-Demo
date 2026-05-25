@@ -86,6 +86,7 @@ MODEL_ID = "allenai/Molmo2-8B"
 print(f"Loading {MODEL_ID}...")
 processor = AutoProcessor.from_pretrained(
     MODEL_ID,
+    attn_implementation="kernels-community/flash-attn2",
     trust_remote_code=True,
     dtype="auto",
     device_map="auto"
@@ -226,7 +227,7 @@ def draw_points_on_video(video_path, points, original_width, original_height):
     out.release()
     return output_path
 
-@spaces.GPU
+@spaces.GPU(size="xlarge", duration=120)
 def process_images(user_text, input_images):
     if not input_images:
         return "Please upload at least one image.", None
@@ -277,19 +278,18 @@ def process_images(user_text, input_images):
         
     return generated_text, output_gallery
 
-@spaces.GPU
+@spaces.GPU(size="xlarge", duration=120)
 def process_video(user_text, video_path):
     if not video_path:
         return "Please upload a video.", None
 
     # Construct messages
-    # Note: Molmo expects a URL or a path it can read. 
     messages = [
         {
             "role": "user",
             "content": [
                 dict(type="text", text=user_text),
-                dict(type="video", video=video_path),
+                dict(type="video", video=video_path, max_fps=8),
             ],
         }
     ]
@@ -345,7 +345,7 @@ css="""
     margin: 0 auto;
     max-width: 960px;
 }
-#main-title h1 {font-size: 2.1em !important;}
+#main-title h1 {font-size: 2.3em !important;}
 """
 
 with gr.Blocks() as demo:
@@ -381,7 +381,7 @@ with gr.Blocks() as demo:
             )
         
         with gr.Tab("Video (QA, Pointing & Tracking)"):
-            gr.Markdown("**Note:** Video processing takes longer as frames are sampled.")
+            gr.Markdown("**Tip:** For best tracking results, we automatically use `max_fps=8` during processing.")
             with gr.Row():
                 with gr.Column():
                     vid_input = gr.Video(label="Input Video", format="mp4", height=400)
@@ -395,7 +395,9 @@ with gr.Blocks() as demo:
             gr.Examples(
                 examples=[
                     ["example-videos/sample_video.mp4", "Track the football."],
+                    ["example-videos/s2.mp4", "Track the running cheetah."],
                     ["example-videos/drink.mp4", "Explain the video."],
+                    ["example-videos/s3.mp4", "Track all the black chickens."],
                     ],
                     inputs=[vid_input, vid_prompt],
                     label="Video Examples"
